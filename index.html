@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Game Edukasi Anak TK - Soal Diacak!</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+      touch-action: manipulation;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      overflow-x: hidden;
+    }
+
+    /* MENU UTAMA */
+    #menu-screen {
+      text-align: center;
+      background: white;
+      padding: 22px 26px;
+      border-radius: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      border: 5px solid #FFD93D;
+      max-width: 580px;
+      width: 100%;
+    }
+
+    h1 {
+      color: #FF6B6B;
+      font-size: 1.8rem;
+      margin-bottom: 4px;
+      text-shadow: 2px 2px #FFE66D;
+    }
+
+    p.subtitle {
+      color: #4D96FF;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      font-weight: bold;
+    }
+
+    .badge-shuffle {
+      display: inline-block;
+      background: #E8F5E9;
+      color: #2E7D32;
+      border: 1px solid #81C784;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+      font-weight: bold;
+    }
+
+    .btn-game-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .btn-game {
+      width: 100%;
+      padding: 13px 16px;
+      font-size: 1.05rem;
+      font-weight: bold;
+      color: white;
+      border: none;
+      border-radius: 18px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 rgba(0,0,0,0.15);
+      transition: all 0.1s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-game:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 rgba(0,0,0,0.15);
+    }
+
+    .btn-g1 { background: #FF6B6B; }
+    .btn-g2 { background: #6BCB77; }
+    .btn-g3 { background: #4D96FF; }
+    .btn-g4 { background: #FFA900; }
+    .btn-g5 { background: #9B51E0; }
+
+    /* LAYAR GAME */
+    #game-container {
+      display: none;
+      width: 100%;
+      max-width: 1050px;
+      height: 98vh;
+      height: 98dvh;
+      background: white;
+      border-radius: 20px;
+      border: 5px solid #FFD93D;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* HEADER */
+    .game-header {
+      background: #FFE66D;
+      padding: 6px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid #FFD93D;
+    }
+
+    .btn-back {
+      background: #FF6B6B;
+      color: white;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .streak-badge {
+      font-size: 0.8rem;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 10px;
+      background: #FFF;
+      color: #E65100;
+      border: 1px solid #FFA726;
+    }
+
+    /* TIMER */
+    .timer-container {
+      width: 100%;
+      height: 8px;
+      background: #EEE;
+    }
+
+    .timer-bar {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #4CAF50, #8BC34A);
+      transition: width 0.1s linear;
+    }
+
+    .question-box {
+      background: #FFF9E6;
+      padding: 8px 10px;
+      text-align: center;
+      border-bottom: 2px dashed #FFD93D;
+    }
+
+    .question-title {
+      font-size: 1.25rem;
+      color: #333;
+      font-weight: bold;
+      line-height: 1.2;
+    }
+
+    /* SPLIT SCREEN DUA PEMAIN */
+    .players-arena {
+      flex: 1;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .divider {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #FFE66D;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+
+    .player-zone {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 6px;
+      position: relative;
+    }
+
+    .player-p1 { background: #E8F0FE; }
+    .player-p2 { background: #FCE8E6; }
+
+    .freeze-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(80, 80, 80, 0.55);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: white;
+      text-shadow: 1px 1px 3px #000;
+      z-index: 20;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .player-tag {
+      font-size: 0.95rem;
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 14px;
+      color: white;
+    }
+
+    .tag-p1 { background: #1A73E8; }
+    .tag-p2 { background: #D93025; }
+
+    .score-display {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #333;
+      margin: 4px 0;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      max-width: 260px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .option-card {
+      background: white;
+      border-radius: 16px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      border: 3px solid #DCDCDC;
+      box-shadow: 0 4px 0 #CCC;
+      transition: transform 0.05s ease;
+      touch-action: manipulation;
+    }
+
+    .option-card:active {
+      transform: scale(0.96);
+      box-shadow: 0 1px 0 #CCC;
+    }
+
+    .option-card.correct {
+      background: #C8E6C9 !important;
+      border-color: #4CAF50 !important;
+    }
+
+    .option-card.wrong {
+      background: #FFCDD2 !important;
+      border-color: #F44336 !important;
+      animation: shake 0.3s;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    .opt-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .opt-emoji {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .opt-label {
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .btn-hint {
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: #777;
+      background: #F1F3F4;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    /* HP PORTRAIT */
+    @media (max-width: 600px) and (orientation: portrait) {
+      .players-arena {
+        flex-direction: column;
+      }
+      .divider {
+        left: 0; right: 0; top: 50%; bottom: auto;
+        width: 100%; height: 4px;
+        transform: translateY(-50%);
+      }
+      .player-p1 {
+        transform: rotate(180deg);
+      }
+      .question-box { padding: 5px; }
+      .question-title { font-size: 1.05rem; }
+      .opt-emoji { font-size: 1.6rem; }
+      .opt-label { font-size: 0.85rem; }
+      .option-card { padding: 5px 8px; }
+      .options-grid { gap: 5px; }
+    }
+
+    /* RESULT MODAL */
+    #result-modal {
+      display: none;
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 100;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      padding: 15px;
+    }
+
+    #result-modal h2 {
+      font-size: 2rem;
+      color: #FFD93D;
+      margin-bottom: 8px;
+    }
+
+    .winner-announcement {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+    }
+
+    .final-scores {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+
+    .btn-restart {
+      background: #6BCB77;
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 25px;
+      font-size: 1.15rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #388E3C;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MENU AWAL -->
+  <div id="menu-screen">
+    <h1>🎲 5 Game Edukasi Anak TK</h1>
+    <p class="subtitle">Multiplayer 2 Pemain (HP / Tablet / Laptop)</p>
+    <div class="badge-shuffle">🔀 Soal & Posisi Jawaban Selalu Diacak!</div>
+
+    <div class="btn-game-grid">
+      <button class="btn-game btn-g1" onclick="startGame(0)"><span>🌈</span> Game 1: Warna & Bentuk</button>
+      <button class="btn-game btn-g2" onclick="startGame(1)"><span>🦁</span> Game 2: Hewan & Suara</button>
+      <button class="btn-game btn-g3" onclick="startGame(2)"><span>🍎</span> Game 3: Berhitung Cepat 1-5</button>
+      <button class="btn-game btn-g4" onclick="startGame(3)"><span>🥦</span> Game 4: Buah & Sayur Sehat</button>
+      <button class="btn-game btn-g5" onclick="startGame(4)"><span>🚀</span> Game 5: Kendaraan Transportasi</button>
+    </div>
+  </div>
+
+  <!-- CONTAINER GAME -->
+  <div id="game-container">
+    <div class="game-header">
+      <button class="btn-back" onclick="exitToMenu()">⬅ Menu</button>
+      <div id="game-title" style="font-weight: bold; font-size: 0.95rem; color: #555;">Game Edukasi</div>
+      <div id="question-counter" style="font-weight: bold; color: #FF6B6B; font-size: 0.95rem;">1/10</div>
+    </div>
+
+    <!-- TIMER BAR -->
+    <div class="timer-container">
+      <div class="timer-bar" id="timer-bar"></div>
+    </div>
+
+    <div class="question-box">
+      <div class="question-title" id="question-text">Soal tampil di sini</div>
+    </div>
+
+    <div class="players-arena">
+      <div class="divider"></div>
+
+      <!-- PEMAIN 1 -->
+      <div class="player-zone player-p1" id="zone-p1">
+        <div id="freeze-p1" class="freeze-overlay" style="display: none;">❄️ MEMBEKU!</div>
+        <div class="player-tag tag-p1">Pemain 1 (Biru)</div>
+        <div class="score-display">⭐ <span id="score-p1">0</span> <span id="streak-p1" class="streak-badge" style="display: none;">🔥 2x</span></div>
+        <div class="options-grid" id="options-p1"></div>
+      </div>
+
+      <!-- PEMAIN 2 -->
+      <div class="player-zone player-p2" id="zone-p2">
+        <div id="freeze-p2" class="freeze-overlay" style="display: none;">❄️ MEMBEKU!</div>
+        <div class="player-tag tag-p2">Pemain 2 (Merah)</div>
+        <div class="score-display">⭐ <span id="score-p2">0</span> <span id="streak-p2" class="streak-badge" style="display: none;">🔥 2x</span></div>
+        <div class="options-grid" id="options-p2"></div>
+      </div>
+    </div>
+
+    <!-- MODAL HASIL AKHIR -->
+    <div id="result-modal">
+      <h2>🎉 Selesai! 🎉</h2>
+      <div class="winner-announcement" id="winner-text">Pemain 1 Menang! 🏆</div>
+      <div class="final-scores">
+        <div>P1 (Biru): ⭐ <b id="final-p1">0</b></div>
+        <div>P2 (Merah): ⭐ <b id="final-p2">0</b></div>
+      </div>
+      <button class="btn-restart" onclick="restartCurrentGame()">Main Lagi 🔀 (Soal Diacak)</button>
+    </div>
+  </div>
+
+  <script>
+    // Web Audio Synthesizer
+    let audioCtx = null;
+    function initAudio() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+    }
+
+    function playBeep(freq, type = 'sine', duration = 0.15) {
+      try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e){}
+    }
+
+    function soundCorrect() {
+      playBeep(523.25, 'triangle', 0.1);
+      setTimeout(() => playBeep(659.25, 'triangle', 0.12), 90);
+      setTimeout(() => playBeep(783.99, 'triangle', 0.2), 180);
+    }
+
+    function soundWrong() {
+      playBeep(200, 'sawtooth', 0.18);
+      setTimeout(() => playBeep(150, 'sawtooth', 0.22), 130);
+    }
+
+    function soundTimeout() {
+      playBeep(280, 'sine', 0.1);
+      setTimeout(() => playBeep(220, 'sine', 0.25), 110);
+    }
+
+    function soundFinish() {
+      playBeep(440, 'triangle', 0.12);
+      setTimeout(() => playBeep(554.37, 'triangle', 0.12), 110);
+      setTimeout(() => playBeep(659.25, 'triangle', 0.14), 220);
+      setTimeout(() => playBeep(880, 'triangle', 0.3), 330);
+    }
+
+    // FUNGSI PENGACAK ARRAY (Fisher-Yates Shuffle)
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    // 5 GAME DATABASE
+    const RAW_GAMES = [
+      {
+        title: "🌈 Warna & Bentuk",
+        questions: [
+          { q: "Mana yang warnanya MERAH? 🍎", correctEmoji: "🔴", options: [{emoji: "🔴", label: "Merah"}, {emoji: "🔵", label: "Biru"}, {emoji: "🟢", label: "Hijau"}] },
+          { q: "Mana warna KUNING cerah? ☀️", correctEmoji: "🟡", options: [{emoji: "🟣", label: "Ungu"}, {emoji: "🟡", label: "Kuning"}, {emoji: "🔵", label: "Biru"}] },
+          { q: "Cari bentuk BINTANG! ⭐", correctEmoji: "⭐", options: [{emoji: "⬛", label: "Kotak"}, {emoji: "⚪", label: "Bulat"}, {emoji: "⭐", label: "Bintang"}] },
+          { q: "Mana warna HIJAU daun? 🍃", correctEmoji: "🟢", options: [{emoji: "🟢", label: "Hijau"}, {emoji: "🟠", label: "Oranye"}, {emoji: "🔴", label: "Merah"}] },
+          { q: "Cari bentuk HATI cinta! 💖", correctEmoji: "❤️", options: [{emoji: "🔺", label: "Segitiga"}, {emoji: "❤️", label: "Hati"}, {emoji: "⬛", label: "Kotak"}] },
+          { q: "Mana warna BIRU laut? 🌊", correctEmoji: "🔵", options: [{emoji: "🔵", label: "Biru"}, {emoji: "🟡", label: "Kuning"}, {emoji: "🟣", label: "Ungu"}] },
+          { q: "Cari bentuk LINGKARAN bulat! ⚽", correctEmoji: "⚪", options: [{emoji: "⭐", label: "Bintang"}, {emoji: "⚪", label: "Bulat"}, {emoji: "🔺", label: "Segitiga"}] },
+          { q: "Mana buah warna ORANYE segar? 🍊", correctEmoji: "🍊", options: [{emoji: "🍏", label: "Hijau"}, {emoji: "🍇", label: "Ungu"}, {emoji: "🍊", label: "Jeruk"}] },
+          { q: "Cari bentuk SEGITIGA gunung! 🔺", correctEmoji: "🔺", options: [{emoji: "🔺", label: "Segitiga"}, {emoji: "⚪", label: "Lingkaran"}, {emoji: "⬛", label: "Kotak"}] },
+          { q: "Mana warna UNGU seperti anggur? 🍇", correctEmoji: "🟣", options: [{emoji: "🔴", label: "Merah"}, {emoji: "🟣", label: "Ungu"}, {emoji: "🟡", label: "Kuning"}] }
+        ]
+      },
+      {
+        title: "🦁 Hewan & Suara",
+        questions: [
+          { q: "Mana Kucing yang 'Meooong'? 🐱", correctEmoji: "🐱", options: [{emoji: "🐱", label: "Kucing"}, {emoji: "🐶", label: "Anjing"}, {emoji: "🐮", label: "Sapi"}] },
+          { q: "Mana Sapi yang bersuara 'Mooo'? 🐮", correctEmoji: "🐮", options: [{emoji: "🐥", label: "Ayam"}, {emoji: "🦆", label: "Bebek"}, {emoji: "🐮", label: "Sapi"}] },
+          { q: "Hewan mana yang bisa BERENANG? 🌊", correctEmoji: "🐟", options: [{emoji: "🐒", label: "Monyet"}, {emoji: "🐟", label: "Ikan"}, {emoji: "🐰", label: "Kelinci"}] },
+          { q: "Mana GAJAH berbelalai panjang? 🐘", correctEmoji: "🐘", options: [{emoji: "🐘", label: "Gajah"}, {emoji: "🐎", label: "Kuda"}, {emoji: "🐑", label: "Domba"}] },
+          { q: "Suka melompat & makan WORTEL? 🥕", correctEmoji: "🐰", options: [{emoji: "🐸", label: "Katak"}, {emoji: "🐱", label: "Kucing"}, {emoji: "🐰", label: "Kelinci"}] },
+          { q: "Mana Bebek yang 'Kwek-kwek'? 🦆", correctEmoji: "🦆", options: [{emoji: "🦁", label: "Singa"}, {emoji: "🦆", label: "Bebek"}, {emoji: "🐟", label: "Ikan"}] },
+          { q: "Siapa Raja Hutan yang gagah? 👑", correctEmoji: "🦁", options: [{emoji: "🦁", label: "Singa"}, {emoji: "🐵", label: "Monyet"}, {emoji: "🐷", label: "Babi"}] },
+          { q: "Mana Monyet yang suka makan PISANG? 🍌", correctEmoji: "🐒", options: [{emoji: "🐢", label: "Kura-kura"}, {emoji: "🐒", label: "Monyet"}, {emoji: "🐶", label: "Anjing"}] },
+          { q: "Mana Kuda yang larinya kencang? 🐎", correctEmoji: "🐎", options: [{emoji: "🐘", label: "Gajah"}, {emoji: "🐑", label: "Domba"}, {emoji: "🐎", label: "Kuda"}] },
+          { q: "Mana Katak hijau yang suka melompat? 🐸", correctEmoji: "🐸", options: [{emoji: "🐸", label: "Katak"}, {emoji: "🐟", label: "Ikan"}, {emoji: "🦆", label: "Bebek"}] }
+        ]
+      },
+      {
+        title: "🍎 Berhitung Cepat (1-5)",
+        questions: [
+          { q: "Cari APEL yang jumlahnya 1! 🍎", correctEmoji: "🍎", options: [{emoji: "🍎", label: "1 Apel"}, {emoji: "🍎🍎", label: "2 Apel"}, {emoji: "🍎🍎🍎", label: "3 Apel"}] },
+          { q: "Mana Bintang yang berjumlah 2? ⭐⭐", correctEmoji: "⭐⭐", options: [{emoji: "⭐", label: "1"}, {emoji: "⭐⭐", label: "2"}, {emoji: "⭐⭐⭐⭐", label: "4"}] },
+          { q: "Cari Balon yang ada 3! 🎈🎈🎈", correctEmoji: "🎈🎈🎈", options: [{emoji: "🎈", label: "1"}, {emoji: "🎈🎈", label: "2"}, {emoji: "🎈🎈🎈", label: "3"}] },
+          { q: "Mana Permen yang ada 2 buah? 🍬🍬", correctEmoji: "🍬🍬", options: [{emoji: "🍬🍬", label: "2"}, {emoji: "🍬🍬🍬", label: "3"}, {emoji: "🍬", label: "1"}] },
+          { q: "Cari Donat lezat berjumlah 1! 🍩", correctEmoji: "🍩", options: [{emoji: "🍩🍩", label: "2"}, {emoji: "🍩", label: "1"}, {emoji: "🍩🍩🍩", label: "3"}] },
+          { q: "Cari Mobil yang jumlahnya 2! 🚗🚗", correctEmoji: "🚗🚗", options: [{emoji: "🚗🚗", label: "2"}, {emoji: "🚗🚗🚗", label: "3"}, {emoji: "🚗", label: "1"}] },
+          { q: "Mana Es Krim yang berjumlah 3? 🍦🍦🍦", correctEmoji: "🍦🍦🍦", options: [{emoji: "🍦", label: "1"}, {emoji: "🍦🍦", label: "2"}, {emoji: "🍦🍦🍦", label: "3"}] },
+          { q: "Cari Pisang yang ada 4 buah! 🍌🍌🍌🍌", correctEmoji: "🍌🍌🍌🍌", options: [{emoji: "🍌🍌", label: "2"}, {emoji: "🍌🍌🍌🍌", label: "4"}, {emoji: "🍌", label: "1"}] },
+          { q: "Cari Jeruk manis berjumlah 1! 🍊", correctEmoji: "🍊", options: [{emoji: "🍊", label: "1"}, {emoji: "🍊🍊", label: "2"}, {emoji: "🍊🍊🍊", label: "3"}] },
+          { q: "Mana Bebek yang ada 5 ekor? 🐥🐥🐥🐥🐥", correctEmoji: "🐥🐥🐥🐥🐥", options: [{emoji: "🐥🐥", label: "2"}, {emoji: "🐥🐥🐥", label: "3"}, {emoji: "🐥🐥🐥🐥🐥", label: "5"}] }
+        ]
+      },
+      {
+        title: "🥦 Buah & Sayur Sehat",
+        questions: [
+          { q: "Mana Sayur WORTEL sehat untuk mata? 🥕", correctEmoji: "🥕", options: [{emoji: "🥕", label: "Wortel"}, {emoji: "🍰", label: "Kue"}, {emoji: "🍭", label: "Permen"}] },
+          { q: "Mana Buah PISANG warna kuning? 🍌", correctEmoji: "🍌", options: [{emoji: "🥦", label: "Brokoli"}, {emoji: "🍌", label: "Pisang"}, {emoji: "🍟", label: "Kentang"}] },
+          { q: "Mana Sayur BROKOLI hijau segar? 🥦", correctEmoji: "🥦", options: [{emoji: "🍓", label: "Stroberi"}, {emoji: "🍕", label: "Pizza"}, {emoji: "🥦", label: "Brokoli"}] },
+          { q: "Mana SEMANGKA manis merah? 🍉", correctEmoji: "🍉", options: [{emoji: "🍉", label: "Semangka"}, {emoji: "🧅", label: "Bawang"}, {emoji: "🍔", label: "Burger"}] },
+          { q: "Mana STROBERI bintik merah? 🍓", correctEmoji: "🍓", options: [{emoji: "🌽", label: "Jagung"}, {emoji: "🍓", label: "Stroberi"}, {emoji: "🍆", label: "Terong"}] },
+          { q: "Mana JAGUNG manis warna kuning? 🌽", correctEmoji: "🌽", options: [{emoji: "🍎", label: "Apel"}, {emoji: "🌭", label: "Hotdog"}, {emoji: "🌽", label: "Jagung"}] },
+          { q: "Mana SUSU sehat untuk tulang? 🥛", correctEmoji: "🥛", options: [{emoji: "🥛", label: "Susu"}, {emoji: "☕", label: "Kopi"}, {emoji: "🍷", label: "Sirup"}] },
+          { q: "Mana ANGGUR warna ungu bulat? 🍇", correctEmoji: "🍇", options: [{emoji: "🥔", label: "Kentang"}, {emoji: "🍇", label: "Anggur"}, {emoji: "🥒", label: "Timun"}] },
+          { q: "Mana Sayur TOMAT merah segar? 🍅", correctEmoji: "🍅", options: [{emoji: "🍩", label: "Donat"}, {emoji: "🍫", label: "Cokelat"}, {emoji: "🍅", label: "Tomat"}] },
+          { q: "Mana Buah ALPUKAT yang bergizi? 🥑", correctEmoji: "🥑", options: [{emoji: "🥑", label: "Alpukat"}, {emoji: "🍦", label: "Es Krim"}, {emoji: "🍬", label: "Permen"}] }
+        ]
+      },
+      {
+        title: "🚀 Kendaraan Transportasi",
+        questions: [
+          { q: "Mana PESAWAT terbang di langit? ✈️", correctEmoji: "✈️", options: [{emoji: "✈️", label: "Pesawat"}, {emoji: "🚗", label: "Mobil"}, {emoji: "🚢", label: "Kapal"}] },
+          { q: "Mana KAPAL berlayar di laut? 🚢", correctEmoji: "🚢", options: [{emoji: "🚲", label: "Sepeda"}, {emoji: "🚢", label: "Kapal"}, {emoji: "🚁", label: "Helikopter"}] },
+          { q: "Mana KERETA API yang 'Tut-tut'? 🚂", correctEmoji: "🚂", options: [{emoji: "🚌", label: "Bus"}, {emoji: "🚗", label: "Mobil"}, {emoji: "🚂", label: "Kereta"}] },
+          { q: "Mana MOBIL POLISI bersirine? 🚓", correctEmoji: "🚓", options: [{emoji: "🚓", label: "Polisi"}, {emoji: "🚜", label: "Traktor"}, {emoji: "🚲", label: "Sepeda"}] },
+          { q: "Mana HELIKOPTER baling-baling atas? 🚁", correctEmoji: "🚁", options: [{emoji: "✈️", label: "Pesawat"}, {emoji: "🚁", label: "Helikopter"}, {emoji: "⛵", label: "Perahu"}] },
+          { q: "Mana AMBULANS tolong orang sakit? 🚑", correctEmoji: "🚑", options: [{emoji: "🚚", label: "Truk"}, {emoji: "🏍️", label: "Motor"}, {emoji: "🚑", label: "Ambulans"}] },
+          { q: "Mana ROKET ke luar angkasa? 🚀", correctEmoji: "🚀", options: [{emoji: "🚀", label: "Roket"}, {emoji: "🚌", label: "Bus"}, {emoji: "🚗", label: "Mobil"}] },
+          { q: "Mana SEPEDA yang dikayuh kaki? 🚲", correctEmoji: "🚲", options: [{emoji: "🛵", label: "Skuter"}, {emoji: "🚲", label: "Sepeda"}, {emoji: "🚆", label: "Kereta"}] },
+          { q: "Mana MOBIL PEMADAM MERAH? 🚒", correctEmoji: "🚒", options: [{emoji: "🚕", label: "Taksi"}, {emoji: "🚓", label: "Polisi"}, {emoji: "🚒", label: "Damkar"}] },
+          { q: "Mana BUS BESAR antar anak sekolah? 🚌", correctEmoji: "🚌", options: [{emoji: "🚌", label: "Bus"}, {emoji: "🚤", label: "Speedboat"}, {emoji: "🚲", label: "Sepeda"}] }
+        ]
+      }
+    ];
+
+    let currentGameIdx = 0;
+    let activeQuestions = []; // Soal yang sudah diacak
+    let currentQIdx = 0;
+    let currentShuffledOptions = []; // Opsi yang diacak untuk soal saat ini
+
+    let scoreP1 = 0;
+    let scoreP2 = 0;
+    let streakP1 = 0;
+    let streakP2 = 0;
+    let isLocked = false;
+    let freezeP1 = false;
+    let freezeP2 = false;
+
+    const TIME_LIMIT = 8;
+    let timeLeft = TIME_LIMIT;
+    let timerInterval = null;
+
+    function startGame(idx) {
+      initAudio();
+      currentGameIdx = idx;
+      
+      // ACAK URUTAN 10 SOAL TIAP MULAI / ULANG GAME
+      activeQuestions = shuffleArray(RAW_GAMES[currentGameIdx].questions);
+      
+      currentQIdx = 0;
+      scoreP1 = 0;
+      scoreP2 = 0;
+      streakP1 = 0;
+      streakP2 = 0;
+      isLocked = false;
+      freezeP1 = false;
+      freezeP2 = false;
+
+      document.getElementById('menu-screen').style.display = 'none';
+      document.getElementById('game-container').style.display = 'flex';
+      document.getElementById('result-modal').style.display = 'none';
+      document.getElementById('game-title').innerText = RAW_GAMES[currentGameIdx].title;
+
+      updateScores();
+      loadQuestion();
+    }
+
+    function exitToMenu() {
+      clearInterval(timerInterval);
+      document.getElementById('game-container').style.display = 'none';
+      document.getElementById('menu-screen').style.display = 'block';
+    }
+
+    function updateScores() {
+      document.getElementById('score-p1').innerText = scoreP1;
+      document.getElementById('score-p2').innerText = scoreP2;
+
+      const st1 = document.getElementById('streak-p1');
+      if (streakP1 >= 2) {
+        st1.innerText = `🔥 +${streakP1}x`;
+        st1.style.display = 'inline-block';
+      } else {
+        st1.style.display = 'none';
+      }
+
+      const st2 = document.getElementById('streak-p2');
+      if (streakP2 >= 2) {
+        st2.innerText = `🔥 +${streakP2}x`;
+        st2.style.display = 'inline-block';
+      } else {
+        st2.style.display = 'none';
+      }
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      timeLeft = TIME_LIMIT;
+      updateTimerUI();
+
+      timerInterval = setInterval(() => {
+        timeLeft -= 0.1;
+        if (timeLeft <= 0) {
+          timeLeft = 0;
+          updateTimerUI();
+          clearInterval(timerInterval);
+          handleTimeOut();
+        } else {
+          updateTimerUI();
+        }
+      }, 100);
+    }
+
+    function updateTimerUI() {
+      const pct = (timeLeft / TIME_LIMIT) * 100;
+      const bar = document.getElementById('timer-bar');
+      bar.style.width = `${pct}%`;
+
+      if (pct > 50) {
+        bar.style.background = 'linear-gradient(90deg, #4CAF50, #8BC34A)';
+      } else if (pct > 25) {
+        bar.style.background = 'linear-gradient(90deg, #FF9800, #FFC107)';
+      } else {
+        bar.style.background = 'linear-gradient(90deg, #F44336, #FF5722)';
+      }
+    }
+
+    function handleTimeOut() {
+      if (isLocked) return;
+      isLocked = true;
+      soundTimeout();
+
+      const q = activeQuestions[currentQIdx];
+      // Cari kartu benar di opsi yang teracak
+      currentShuffledOptions.forEach((opt, idx) => {
+        if (opt.emoji === q.correctEmoji) {
+          const c1 = document.getElementById(`card-p1-${idx}`);
+          const c2 = document.getElementById(`card-p2-${idx}`);
+          if (c1) c1.classList.add('correct');
+          if (c2) c2.classList.add('correct');
+        }
+      });
+
+      streakP1 = 0;
+      streakP2 = 0;
+      updateScores();
+
+      setTimeout(() => {
+        nextQuestion();
+      }, 1200);
+    }
+
+    function loadQuestion() {
+      isLocked = false;
+      freezeP1 = false;
+      freezeP2 = false;
+      document.getElementById('freeze-p1').style.display = 'none';
+      document.getElementById('freeze-p2').style.display = 'none';
+
+      const q = activeQuestions[currentQIdx];
+      
+      // JUGA ACAK POSISI PILIHAN JAWABAN (agar posisi jawaban benar tidak bisa ditebak)
+      currentShuffledOptions = shuffleArray(q.options);
+
+      document.getElementById('question-counter').innerText = `${currentQIdx + 1}/10`;
+      document.getElementById('question-text').innerText = q.q;
+
+      renderOptions('p1');
+      renderOptions('p2');
+
+      startTimer();
+    }
+
+    function renderOptions(player) {
+      const container = document.getElementById(`options-${player}`);
+      container.innerHTML = '';
+
+      const keyHints = player === 'p1' ? ['[A]', '[S]', '[D]'] : ['[J]', '[K]', '[L]'];
+
+      currentShuffledOptions.forEach((opt, idx) => {
+        const card = document.createElement('div');
+        card.className = 'option-card';
+        card.id = `card-${player}-${idx}`;
+        
+        card.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          handleAnswer(player, idx);
+        });
+
+        card.innerHTML = `
+          <div class="opt-left">
+            <div class="opt-emoji">${opt.emoji}</div>
+            <div class="opt-label">${opt.label}</div>
+          </div>
+          <div class="btn-hint">${keyHints[idx]}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function handleAnswer(player, chosenIdx) {
+      if (isLocked) return;
+      if (player === 'p1' && freezeP1) return;
+      if (player === 'p2' && freezeP2) return;
+
+      const q = activeQuestions[currentQIdx];
+      const selectedOption = currentShuffledOptions[chosenIdx];
+      const isCorrect = (selectedOption.emoji === q.correctEmoji);
+      const chosenCard = document.getElementById(`card-${player}-${chosenIdx}`);
+
+      if (isCorrect) {
+        isLocked = true;
+        clearInterval(timerInterval);
+        soundCorrect();
+        chosenCard.classList.add('correct');
+
+        const speedBonus = Math.round(timeLeft * 2);
+        if (player === 'p1') {
+          streakP1++;
+          streakP2 = 0;
+          scoreP1 += (10 + speedBonus + (streakP1 > 1 ? 5 : 0));
+        } else {
+          streakP2++;
+          streakP1 = 0;
+          scoreP2 += (10 + speedBonus + (streakP2 > 1 ? 5 : 0));
+        }
+        updateScores();
+
+        setTimeout(() => {
+          nextQuestion();
+        }, 850);
+      } else {
+        soundWrong();
+        chosenCard.classList.add('wrong');
+        
+        if (player === 'p1') {
+          freezeP1 = true;
+          streakP1 = 0;
+          document.getElementById('freeze-p1').style.display = 'flex';
+          setTimeout(() => {
+            freezeP1 = false;
+            document.getElementById('freeze-p1').style.display = 'none';
+            chosenCard.classList.remove('wrong');
+          }, 1500);
+        } else {
+          freezeP2 = true;
+          streakP2 = 0;
+          document.getElementById('freeze-p2').style.display = 'flex';
+          setTimeout(() => {
+            freezeP2 = false;
+            document.getElementById('freeze-p2').style.display = 'none';
+            chosenCard.classList.remove('wrong');
+          }, 1500);
+        }
+        updateScores();
+      }
+    }
+
+    function nextQuestion() {
+      currentQIdx++;
+      if (currentQIdx < activeQuestions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      clearInterval(timerInterval);
+      soundFinish();
+      const modal = document.getElementById('result-modal');
+      const winnerText = document.getElementById('winner-text');
+      document.getElementById('final-p1').innerText = scoreP1;
+      document.getElementById('final-p2').innerText = scoreP2;
+
+      if (scoreP1 > scoreP2) {
+        winnerText.innerHTML = "🏆 <span style='color: #4D96FF;'>Pemain 1 (Biru) JUARA!</span> 🌟";
+      } else if (scoreP2 > scoreP1) {
+        winnerText.innerHTML = "🏆 <span style='color: #FF6B6B;'>Pemain 2 (Merah) JUARA!</span> 🌟";
+      } else {
+        winnerText.innerHTML = "🤝 <span style='color: #FFE66D;'>SERI! Keduanya Hebat!</span> 🥳";
+      }
+
+      modal.style.display = 'flex';
+    }
+
+    function restartCurrentGame() {
+      startGame(currentGameIdx); // Mengacak ulang seluruh soal & jawaban
+    }
+
+    // Keyboard support
+    window.addEventListener('keydown', (e) => {
+      if (document.getElementById('game-container').style.display !== 'flex') return;
+      const key = e.key.toLowerCase();
+
+      if (key === 'a') handleAnswer('p1', 0);
+      if (key === 's') handleAnswer('p1', 1);
+      if (key === 'd') handleAnswer('p1', 2);
+
+      if (key === 'j') handleAnswer('p2', 0);
+      if (key === 'k') handleAnswer('p2', 1);
+      if (key === 'l') handleAnswer('p2', 2);
+    });
+  </script>
+</body>
+</html>
