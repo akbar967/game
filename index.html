@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Game Edukasi Anak TK - Soal Diacak!</title>
+  <title>Game Edukasi Anak TK - Multiplayer</title>
   <style>
     * {
       box-sizing: border-box;
@@ -32,24 +32,24 @@
     #menu-screen {
       text-align: center;
       background: white;
-      padding: 22px 26px;
-      border-radius: 25px;
+      padding: 24px 28px;
+      border-radius: 28px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      border: 5px solid #FFD93D;
-      max-width: 580px;
+      border: 6px solid #FFD93D;
+      max-width: 620px;
       width: 100%;
     }
 
     h1 {
       color: #FF6B6B;
-      font-size: 1.8rem;
-      margin-bottom: 4px;
+      font-size: 2.1rem;
+      margin-bottom: 6px;
       text-shadow: 2px 2px #FFE66D;
     }
 
     p.subtitle {
       color: #4D96FF;
-      font-size: 0.95rem;
+      font-size: 1.1rem;
       margin-bottom: 14px;
       font-weight: bold;
     }
@@ -58,35 +58,35 @@
       display: inline-block;
       background: #E8F5E9;
       color: #2E7D32;
-      border: 1px solid #81C784;
-      padding: 4px 12px;
+      border: 2px solid #81C784;
+      padding: 6px 16px;
       border-radius: 20px;
-      font-size: 0.85rem;
-      margin-bottom: 12px;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
       font-weight: bold;
     }
 
     .btn-game-grid {
       display: flex;
       flex-direction: column;
-      gap: 9px;
+      gap: 10px;
     }
 
     .btn-game {
       width: 100%;
-      padding: 13px 16px;
-      font-size: 1.05rem;
+      padding: 15px 18px;
+      font-size: 1.15rem;
       font-weight: bold;
       color: white;
       border: none;
-      border-radius: 18px;
+      border-radius: 20px;
       cursor: pointer;
       box-shadow: 0 5px 0 rgba(0,0,0,0.15);
       transition: all 0.1s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .btn-game:active {
@@ -104,12 +104,12 @@
     #game-container {
       display: none;
       width: 100%;
-      max-width: 1050px;
+      max-width: 1100px;
       height: 98vh;
       height: 98dvh;
       background: white;
-      border-radius: 20px;
-      border: 5px solid #FFD93D;
+      border-radius: 24px;
+      border: 6px solid #FFD93D;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
       flex-direction: column;
       position: relative;
@@ -119,39 +119,41 @@
     /* HEADER */
     .game-header {
       background: #FFE66D;
-      padding: 6px 12px;
+      padding: 8px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 3px solid #FFD93D;
+      border-bottom: 4px solid #FFD93D;
+      flex-shrink: 0;
     }
 
     .btn-back {
       background: #FF6B6B;
       color: white;
       border: none;
-      padding: 5px 12px;
-      border-radius: 14px;
+      padding: 7px 16px;
+      border-radius: 16px;
       font-weight: bold;
       cursor: pointer;
-      font-size: 0.85rem;
+      font-size: 1rem;
     }
 
     .streak-badge {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: bold;
-      padding: 2px 6px;
-      border-radius: 10px;
+      padding: 3px 8px;
+      border-radius: 12px;
       background: #FFF;
       color: #E65100;
       border: 1px solid #FFA726;
     }
 
-    /* TIMER */
+    /* TIMER 20 DETIK */
     .timer-container {
       width: 100%;
-      height: 8px;
+      height: 12px;
       background: #EEE;
+      flex-shrink: 0;
     }
 
     .timer-bar {
@@ -161,18 +163,32 @@
       transition: width 0.1s linear;
     }
 
+    /* KOTAK PERTANYAAN LEBIH BESAR & JELAS */
     .question-box {
       background: #FFF9E6;
-      padding: 8px 10px;
+      padding: 12px 18px;
       text-align: center;
-      border-bottom: 2px dashed #FFD93D;
+      border-bottom: 3px dashed #FFD93D;
+      flex-shrink: 0;
     }
 
     .question-title {
-      font-size: 1.25rem;
-      color: #333;
+      font-size: 1.85rem; /* JAUH LEBIH BESAR */
+      color: #222;
+      font-weight: 900;
+      line-height: 1.25;
+      text-shadow: 1px 1px 0px #FFE66D;
+    }
+
+    .timer-badge-text {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 1.05rem;
       font-weight: bold;
-      line-height: 1.2;
+      color: #E65100;
+      background: #FFE082;
+      padding: 3px 12px;
+      border-radius: 12px;
     }
 
     /* SPLIT SCREEN DUA PEMAIN */
@@ -188,7 +204,7 @@
       left: 50%;
       top: 0;
       bottom: 0;
-      width: 4px;
+      width: 6px;
       background: #FFE66D;
       transform: translateX(-50%);
       z-index: 10;
@@ -200,7 +216,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 6px;
+      padding: 10px;
       position: relative;
     }
 
@@ -210,25 +226,25 @@
     .freeze-overlay {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(80, 80, 80, 0.55);
-      border-radius: 15px;
+      background: rgba(80, 80, 80, 0.6);
+      border-radius: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      font-size: 1.6rem;
       font-weight: bold;
       color: white;
-      text-shadow: 1px 1px 3px #000;
+      text-shadow: 2px 2px 4px #000;
       z-index: 20;
       text-align: center;
       padding: 10px;
     }
 
     .player-tag {
-      font-size: 0.95rem;
+      font-size: 1.1rem;
       font-weight: bold;
-      padding: 4px 10px;
-      border-radius: 14px;
+      padding: 6px 14px;
+      border-radius: 16px;
       color: white;
     }
 
@@ -236,39 +252,40 @@
     .tag-p2 { background: #D93025; }
 
     .score-display {
-      font-size: 1.25rem;
+      font-size: 1.45rem;
       font-weight: bold;
       color: #333;
       margin: 4px 0;
     }
 
+    /* KARTU JAWABAN BESAR UNTUK JARI ANAK */
     .options-grid {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       width: 100%;
-      max-width: 260px;
+      max-width: 320px;
       flex: 1;
       justify-content: center;
     }
 
     .option-card {
       background: white;
-      border-radius: 16px;
-      padding: 8px 10px;
+      border-radius: 20px;
+      padding: 12px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
-      border: 3px solid #DCDCDC;
-      box-shadow: 0 4px 0 #CCC;
+      border: 4px solid #DCDCDC;
+      box-shadow: 0 5px 0 #CCC;
       transition: transform 0.05s ease;
       touch-action: manipulation;
     }
 
     .option-card:active {
       transform: scale(0.96);
-      box-shadow: 0 1px 0 #CCC;
+      box-shadow: 0 2px 0 #CCC;
     }
 
     .option-card.correct {
@@ -284,55 +301,91 @@
 
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
     }
 
     .opt-left {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
     }
 
     .opt-emoji {
-      font-size: 2rem;
+      font-size: 2.6rem;
       line-height: 1;
     }
 
     .opt-label {
-      font-size: 0.95rem;
-      font-weight: bold;
+      font-size: 1.25rem;
+      font-weight: 800;
       color: #333;
     }
 
     .btn-hint {
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       font-weight: bold;
-      color: #777;
+      color: #666;
       background: #F1F3F4;
-      padding: 2px 6px;
-      border-radius: 6px;
+      padding: 4px 8px;
+      border-radius: 8px;
     }
 
-    /* HP PORTRAIT */
+    /* MODE HP KHUSUS LAYAR TEGAK (PORTRAIT) */
     @media (max-width: 600px) and (orientation: portrait) {
       .players-arena {
         flex-direction: column;
       }
       .divider {
         left: 0; right: 0; top: 50%; bottom: auto;
-        width: 100%; height: 4px;
+        width: 100%; height: 5px;
         transform: translateY(-50%);
       }
+      /* Pemain 1 diputar 180 derajat agar bisa saling berhadapan di meja */
       .player-p1 {
         transform: rotate(180deg);
       }
-      .question-box { padding: 5px; }
-      .question-title { font-size: 1.05rem; }
-      .opt-emoji { font-size: 1.6rem; }
-      .opt-label { font-size: 0.85rem; }
-      .option-card { padding: 5px 8px; }
-      .options-grid { gap: 5px; }
+      .question-box {
+        padding: 8px 12px;
+      }
+      .question-title {
+        font-size: 1.4rem; /* Tetap besar dan nyaman dibaca di layar HP */
+      }
+      .timer-badge-text {
+        font-size: 0.9rem;
+        padding: 2px 8px;
+      }
+      .opt-emoji {
+        font-size: 2rem;
+      }
+      .opt-label {
+        font-size: 1.05rem;
+      }
+      .option-card {
+        padding: 8px 10px;
+      }
+      .options-grid {
+        gap: 6px;
+      }
+    }
+
+    /* MODE HP LANDSCAPE / TABLET */
+    @media (max-width: 900px) and (orientation: landscape) {
+      .question-title {
+        font-size: 1.45rem;
+      }
+      .opt-emoji {
+        font-size: 2.1rem;
+      }
+      .opt-label {
+        font-size: 1.1rem;
+      }
+      .option-card {
+        padding: 8px 10px;
+      }
+      .options-grid {
+        gap: 6px;
+      }
     }
 
     /* RESULT MODAL */
@@ -347,34 +400,34 @@
       justify-content: center;
       color: white;
       text-align: center;
-      padding: 15px;
+      padding: 20px;
     }
 
     #result-modal h2 {
-      font-size: 2rem;
+      font-size: 2.4rem;
       color: #FFD93D;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
 
     .winner-announcement {
-      font-size: 1.4rem;
-      margin-bottom: 16px;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
     }
 
     .final-scores {
       display: flex;
-      gap: 20px;
-      margin-bottom: 20px;
-      font-size: 1.2rem;
+      gap: 25px;
+      margin-bottom: 25px;
+      font-size: 1.35rem;
     }
 
     .btn-restart {
       background: #6BCB77;
       color: white;
       border: none;
-      padding: 12px 28px;
-      border-radius: 25px;
-      font-size: 1.15rem;
+      padding: 14px 34px;
+      border-radius: 30px;
+      font-size: 1.25rem;
       font-weight: bold;
       cursor: pointer;
       box-shadow: 0 5px 0 #388E3C;
@@ -386,8 +439,8 @@
   <!-- MENU AWAL -->
   <div id="menu-screen">
     <h1>🎲 5 Game Edukasi Anak TK</h1>
-    <p class="subtitle">Multiplayer 2 Pemain (HP / Tablet / Laptop)</p>
-    <div class="badge-shuffle">🔀 Soal & Posisi Jawaban Selalu Diacak!</div>
+    <p class="subtitle">Multiplayer 2 Pemain (HP / Tablet / Komputer)</p>
+    <div class="badge-shuffle">⏱️ Waktu 20 Detik &bull; Teks Soal Ekstra Besar &bull; Soal Diacak!</div>
 
     <div class="btn-game-grid">
       <button class="btn-game btn-g1" onclick="startGame(0)"><span>🌈</span> Game 1: Warna & Bentuk</button>
@@ -402,17 +455,19 @@
   <div id="game-container">
     <div class="game-header">
       <button class="btn-back" onclick="exitToMenu()">⬅ Menu</button>
-      <div id="game-title" style="font-weight: bold; font-size: 0.95rem; color: #555;">Game Edukasi</div>
-      <div id="question-counter" style="font-weight: bold; color: #FF6B6B; font-size: 0.95rem;">1/10</div>
+      <div id="game-title" style="font-weight: bold; font-size: 1.1rem; color: #555;">Game Edukasi</div>
+      <div id="question-counter" style="font-weight: bold; color: #FF6B6B; font-size: 1.1rem;">1/10</div>
     </div>
 
-    <!-- TIMER BAR -->
+    <!-- TIMER BAR (20 DETIK) -->
     <div class="timer-container">
       <div class="timer-bar" id="timer-bar"></div>
     </div>
 
+    <!-- KOTAK PERTANYAAN BESAR -->
     <div class="question-box">
       <div class="question-title" id="question-text">Soal tampil di sini</div>
+      <div class="timer-badge-text">⏱️ Sisa Waktu: <span id="timer-seconds">20</span>s</div>
     </div>
 
     <div class="players-arena">
@@ -437,9 +492,9 @@
 
     <!-- MODAL HASIL AKHIR -->
     <div id="result-modal">
-      <h2>🎉 Selesai! 🎉</h2>
+      <h2>🎉 Permainan Selesai! 🎉</h2>
       <div class="winner-announcement" id="winner-text">Pemain 1 Menang! 🏆</div>
-      <div class="final-scores">
+      <div final class="final-scores">
         <div>P1 (Biru): ⭐ <b id="final-p1">0</b></div>
         <div>P2 (Merah): ⭐ <b id="final-p2">0</b></div>
       </div>
@@ -494,7 +549,7 @@
       setTimeout(() => playBeep(880, 'triangle', 0.3), 330);
     }
 
-    // FUNGSI PENGACAK ARRAY (Fisher-Yates Shuffle)
+    // FUNGSI PENGACAK ARRAY
     function shuffleArray(arr) {
       const copy = [...arr];
       for (let i = copy.length - 1; i > 0; i--) {
@@ -504,7 +559,7 @@
       return copy;
     }
 
-    // 5 GAME DATABASE
+    // 5 GAME DATABASE (10 SOAL MASING-MASING)
     const RAW_GAMES = [
       {
         title: "🌈 Warna & Bentuk",
@@ -584,9 +639,9 @@
     ];
 
     let currentGameIdx = 0;
-    let activeQuestions = []; // Soal yang sudah diacak
+    let activeQuestions = [];
     let currentQIdx = 0;
-    let currentShuffledOptions = []; // Opsi yang diacak untuk soal saat ini
+    let currentShuffledOptions = [];
 
     let scoreP1 = 0;
     let scoreP2 = 0;
@@ -596,7 +651,8 @@
     let freezeP1 = false;
     let freezeP2 = false;
 
-    const TIME_LIMIT = 8;
+    // WAKTU 20 DETIK
+    const TIME_LIMIT = 20;
     let timeLeft = TIME_LIMIT;
     let timerInterval = null;
 
@@ -604,7 +660,7 @@
       initAudio();
       currentGameIdx = idx;
       
-      // ACAK URUTAN 10 SOAL TIAP MULAI / ULANG GAME
+      // Acak soal
       activeQuestions = shuffleArray(RAW_GAMES[currentGameIdx].questions);
       
       currentQIdx = 0;
@@ -674,6 +730,7 @@
       const pct = (timeLeft / TIME_LIMIT) * 100;
       const bar = document.getElementById('timer-bar');
       bar.style.width = `${pct}%`;
+      document.getElementById('timer-seconds').innerText = Math.ceil(timeLeft);
 
       if (pct > 50) {
         bar.style.background = 'linear-gradient(90deg, #4CAF50, #8BC34A)';
@@ -690,7 +747,6 @@
       soundTimeout();
 
       const q = activeQuestions[currentQIdx];
-      // Cari kartu benar di opsi yang teracak
       currentShuffledOptions.forEach((opt, idx) => {
         if (opt.emoji === q.correctEmoji) {
           const c1 = document.getElementById(`card-p1-${idx}`);
@@ -717,8 +773,6 @@
       document.getElementById('freeze-p2').style.display = 'none';
 
       const q = activeQuestions[currentQIdx];
-      
-      // JUGA ACAK POSISI PILIHAN JAWABAN (agar posisi jawaban benar tidak bisa ditebak)
       currentShuffledOptions = shuffleArray(q.options);
 
       document.getElementById('question-counter').innerText = `${currentQIdx + 1}/10`;
@@ -773,7 +827,7 @@
         soundCorrect();
         chosenCard.classList.add('correct');
 
-        const speedBonus = Math.round(timeLeft * 2);
+        const speedBonus = Math.round(timeLeft);
         if (player === 'p1') {
           streakP1++;
           streakP2 = 0;
@@ -844,7 +898,7 @@
     }
 
     function restartCurrentGame() {
-      startGame(currentGameIdx); // Mengacak ulang seluruh soal & jawaban
+      startGame(currentGameIdx);
     }
 
     // Keyboard support
