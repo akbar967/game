@@ -24,7 +24,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 8px;
+      padding: 6px;
       overflow-x: hidden;
     }
 
@@ -32,56 +32,86 @@
     #menu-screen {
       text-align: center;
       background: white;
-      padding: 24px 28px;
-      border-radius: 28px;
+      padding: 20px 22px;
+      border-radius: 25px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      border: 6px solid #FFD93D;
-      max-width: 620px;
+      border: 5px solid #FFD93D;
+      max-width: 580px;
       width: 100%;
+      max-height: 96vh;
+      overflow-y: auto;
     }
 
     h1 {
       color: #FF6B6B;
-      font-size: 2.1rem;
-      margin-bottom: 6px;
+      font-size: 1.85rem;
+      margin-bottom: 4px;
       text-shadow: 2px 2px #FFE66D;
     }
 
     p.subtitle {
       color: #4D96FF;
-      font-size: 1.1rem;
-      margin-bottom: 14px;
+      font-size: 1rem;
+      margin-bottom: 12px;
       font-weight: bold;
     }
 
-    .badge-shuffle {
-      display: inline-block;
-      background: #E8F5E9;
-      color: #2E7D32;
-      border: 2px solid #81C784;
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 0.95rem;
+    /* PANDUAN CARA BERMAIN */
+    .guide-box {
+      background: #FFFDE7;
+      border: 2px dashed #FFB300;
+      border-radius: 18px;
+      padding: 12px 14px;
       margin-bottom: 14px;
-      font-weight: bold;
+      text-align: left;
+      font-size: 0.9rem;
+      color: #444;
+      line-height: 1.45;
     }
+
+    .guide-box h3 {
+      color: #E65100;
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .guide-section {
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dotted #FFD54F;
+    }
+
+    .guide-tag {
+      display: inline-block;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 10px;
+      color: white;
+      font-size: 0.8rem;
+    }
+
+    .guide-tag.hp { background: #00897B; }
+    .guide-tag.pc { background: #5E35B1; }
 
     .btn-game-grid {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 9px;
     }
 
     .btn-game {
       width: 100%;
-      padding: 15px 18px;
-      font-size: 1.15rem;
+      padding: 13px 16px;
+      font-size: 1.1rem;
       font-weight: bold;
       color: white;
       border: none;
-      border-radius: 20px;
+      border-radius: 18px;
       cursor: pointer;
-      box-shadow: 0 5px 0 rgba(0,0,0,0.15);
+      box-shadow: 0 4px 0 rgba(0,0,0,0.15);
       transition: all 0.1s ease;
       display: flex;
       align-items: center;
@@ -90,8 +120,8 @@
     }
 
     .btn-game:active {
-      transform: translateY(3px);
-      box-shadow: 0 2px 0 rgba(0,0,0,0.15);
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.15);
     }
 
     .btn-g1 { background: #FF6B6B; }
@@ -104,12 +134,12 @@
     #game-container {
       display: none;
       width: 100%;
-      max-width: 1100px;
+      max-width: 1050px;
       height: 98vh;
       height: 98dvh;
       background: white;
-      border-radius: 24px;
-      border: 6px solid #FFD93D;
+      border-radius: 20px;
+      border: 5px solid #FFD93D;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
       flex-direction: column;
       position: relative;
@@ -119,11 +149,11 @@
     /* HEADER */
     .game-header {
       background: #FFE66D;
-      padding: 8px 16px;
+      padding: 6px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 4px solid #FFD93D;
+      border-bottom: 3px solid #FFD93D;
       flex-shrink: 0;
     }
 
@@ -131,27 +161,27 @@
       background: #FF6B6B;
       color: white;
       border: none;
-      padding: 7px 16px;
-      border-radius: 16px;
+      padding: 5px 14px;
+      border-radius: 14px;
       font-weight: bold;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
 
     .streak-badge {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: bold;
-      padding: 3px 8px;
-      border-radius: 12px;
+      padding: 2px 6px;
+      border-radius: 10px;
       background: #FFF;
       color: #E65100;
       border: 1px solid #FFA726;
     }
 
-    /* TIMER 20 DETIK */
+    /* TIMER (20 DETIK) */
     .timer-container {
       width: 100%;
-      height: 12px;
+      height: 8px;
       background: #EEE;
       flex-shrink: 0;
     }
@@ -163,17 +193,17 @@
       transition: width 0.1s linear;
     }
 
-    /* KOTAK PERTANYAAN LEBIH BESAR & JELAS */
+    /* KOTAK PERTANYAAN BESAR */
     .question-box {
       background: #FFF9E6;
-      padding: 12px 18px;
+      padding: 8px 12px;
       text-align: center;
       border-bottom: 3px dashed #FFD93D;
       flex-shrink: 0;
     }
 
     .question-title {
-      font-size: 1.85rem; /* JAUH LEBIH BESAR */
+      font-size: 1.55rem;
       color: #222;
       font-weight: 900;
       line-height: 1.25;
@@ -182,16 +212,16 @@
 
     .timer-badge-text {
       display: inline-block;
-      margin-top: 4px;
-      font-size: 1.05rem;
+      margin-top: 3px;
+      font-size: 0.95rem;
       font-weight: bold;
       color: #E65100;
       background: #FFE082;
-      padding: 3px 12px;
-      border-radius: 12px;
+      padding: 2px 10px;
+      border-radius: 10px;
     }
 
-    /* SPLIT SCREEN DUA PEMAIN */
+    /* ARENA BERMAIN */
     .players-arena {
       flex: 1;
       display: flex;
@@ -199,24 +229,13 @@
       overflow: hidden;
     }
 
-    .divider {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      bottom: 0;
-      width: 6px;
-      background: #FFE66D;
-      transform: translateX(-50%);
-      z-index: 10;
-    }
-
     .player-zone {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      padding: 10px;
+      justify-content: space-around;
+      padding: 8px 10px;
       position: relative;
     }
 
@@ -226,25 +245,35 @@
     .freeze-overlay {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(80, 80, 80, 0.6);
-      border-radius: 18px;
+      background: rgba(80, 80, 80, 0.65);
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       font-weight: bold;
       color: white;
       text-shadow: 2px 2px 4px #000;
-      z-index: 20;
+      z-index: 25;
       text-align: center;
       padding: 10px;
     }
 
+    .player-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 320px;
+      margin-bottom: 4px;
+      flex-shrink: 0;
+    }
+
     .player-tag {
-      font-size: 1.1rem;
+      font-size: 0.95rem;
       font-weight: bold;
-      padding: 6px 14px;
-      border-radius: 16px;
+      padding: 4px 12px;
+      border-radius: 14px;
       color: white;
     }
 
@@ -252,17 +281,16 @@
     .tag-p2 { background: #D93025; }
 
     .score-display {
-      font-size: 1.45rem;
+      font-size: 1.25rem;
       font-weight: bold;
       color: #333;
-      margin: 4px 0;
     }
 
-    /* KARTU JAWABAN BESAR UNTUK JARI ANAK */
+    /* KARTU JAWABAN */
     .options-grid {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
       width: 100%;
       max-width: 320px;
       flex: 1;
@@ -271,21 +299,21 @@
 
     .option-card {
       background: white;
-      border-radius: 20px;
-      padding: 12px 14px;
+      border-radius: 18px;
+      padding: 10px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
-      border: 4px solid #DCDCDC;
-      box-shadow: 0 5px 0 #CCC;
+      border: 3px solid #DCDCDC;
+      box-shadow: 0 4px 0 #CCC;
       transition: transform 0.05s ease;
       touch-action: manipulation;
     }
 
     .option-card:active {
       transform: scale(0.96);
-      box-shadow: 0 2px 0 #CCC;
+      box-shadow: 0 1px 0 #CCC;
     }
 
     .option-card.correct {
@@ -301,90 +329,126 @@
 
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      75% { transform: translateX(6px); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
     }
 
     .opt-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .opt-emoji {
-      font-size: 2.6rem;
+      font-size: 2.3rem;
       line-height: 1;
     }
 
     .opt-label {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 800;
       color: #333;
     }
 
-    .btn-hint {
+    /* Tombol petunjuk keyboard (hanya tampil di laptop/PC) */
+    .key-hint {
       font-size: 0.85rem;
       font-weight: bold;
       color: #666;
       background: #F1F3F4;
-      padding: 4px 8px;
-      border-radius: 8px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid #CCC;
     }
 
-    /* MODE HP KHUSUS LAYAR TEGAK (PORTRAIT) */
+    /* ============================================================ */
+    /* PENGATURAN LAPTOP / PC / LAYAR LEBAR (KIRI - KANAN)          */
+    /* ============================================================ */
+    @media (min-width: 601px) {
+      .divider {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 6px;
+        background: #FFE66D;
+        transform: translateX(-50%);
+        z-index: 10;
+      }
+    }
+
+    /* ============================================================ */
+    /* PENGATURAN KHUSUS SMARTPHONE (HP PORTRAIT / LAYAR TEGAK)    */
+    /* TAMPILAN NORMAL (TIDAK TERBALIK), PEMAIN 1 ATAS, PEMAIN 2 BAWAH */
+    /* ============================================================ */
     @media (max-width: 600px) and (orientation: portrait) {
+      body {
+        padding: 4px;
+      }
+      #game-container {
+        height: 99vh;
+        height: 99dvh;
+        border-width: 4px;
+      }
       .players-arena {
         flex-direction: column;
       }
       .divider {
         left: 0; right: 0; top: 50%; bottom: auto;
         width: 100%; height: 5px;
+        background: #FFD93D;
         transform: translateY(-50%);
+        z-index: 10;
       }
-      /* Pemain 1 diputar 180 derajat agar bisa saling berhadapan di meja */
+      /* TIDAK DIBALIK LAGI - SEMUA TEKS TEGAK RAPI & NORMAL */
       .player-p1 {
-        transform: rotate(180deg);
+        transform: none !important;
+        border-bottom: 2px solid #FFD93D;
+        padding-top: 4px;
+        padding-bottom: 6px;
+      }
+      .player-p2 {
+        border-top: 2px solid #FFD93D;
+        padding-top: 6px;
+        padding-bottom: 4px;
       }
       .question-box {
-        padding: 8px 12px;
+        padding: 6px 10px;
       }
       .question-title {
-        font-size: 1.4rem; /* Tetap besar dan nyaman dibaca di layar HP */
+        font-size: 1.25rem;
       }
       .timer-badge-text {
-        font-size: 0.9rem;
-        padding: 2px 8px;
+        font-size: 0.85rem;
+        padding: 1px 8px;
+      }
+      .player-header-bar {
+        margin-bottom: 2px;
+      }
+      .player-tag {
+        font-size: 0.85rem;
+        padding: 3px 10px;
+      }
+      .score-display {
+        font-size: 1.1rem;
       }
       .opt-emoji {
-        font-size: 2rem;
+        font-size: 1.85rem;
       }
       .opt-label {
         font-size: 1.05rem;
       }
       .option-card {
-        padding: 8px 10px;
+        padding: 6px 10px;
+        border-radius: 14px;
+        border-width: 2.5px;
       }
       .options-grid {
-        gap: 6px;
+        gap: 5px;
       }
-    }
-
-    /* MODE HP LANDSCAPE / TABLET */
-    @media (max-width: 900px) and (orientation: landscape) {
-      .question-title {
-        font-size: 1.45rem;
-      }
-      .opt-emoji {
-        font-size: 2.1rem;
-      }
-      .opt-label {
-        font-size: 1.1rem;
-      }
-      .option-card {
-        padding: 8px 10px;
-      }
-      .options-grid {
-        gap: 6px;
+      /* Di HP sembunyikan petunjuk keyboard [A], [S] agar bersih untuk jari */
+      .key-hint {
+        display: none !important;
       }
     }
 
@@ -400,37 +464,37 @@
       justify-content: center;
       color: white;
       text-align: center;
-      padding: 20px;
+      padding: 15px;
     }
 
     #result-modal h2 {
-      font-size: 2.4rem;
+      font-size: 2.2rem;
       color: #FFD93D;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .winner-announcement {
-      font-size: 1.6rem;
-      margin-bottom: 20px;
+      font-size: 1.5rem;
+      margin-bottom: 18px;
     }
 
     .final-scores {
       display: flex;
-      gap: 25px;
-      margin-bottom: 25px;
-      font-size: 1.35rem;
+      gap: 20px;
+      margin-bottom: 20px;
+      font-size: 1.25rem;
     }
 
     .btn-restart {
       background: #6BCB77;
       color: white;
       border: none;
-      padding: 14px 34px;
-      border-radius: 30px;
-      font-size: 1.25rem;
+      padding: 13px 30px;
+      border-radius: 28px;
+      font-size: 1.15rem;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 5px 0 #388E3C;
+      box-shadow: 0 4px 0 #388E3C;
     }
   </style>
 </head>
@@ -439,8 +503,29 @@
   <!-- MENU AWAL -->
   <div id="menu-screen">
     <h1>🎲 5 Game Edukasi Anak TK</h1>
-    <p class="subtitle">Multiplayer 2 Pemain (HP / Tablet / Komputer)</p>
-    <div class="badge-shuffle">⏱️ Waktu 20 Detik &bull; Teks Soal Ekstra Besar &bull; Soal Diacak!</div>
+    <p class="subtitle">Multiplayer 2 Pemain (Usia 1 - 5 Tahun)</p>
+
+    <!-- PETUNJUK & CARA BERMAIN RESMI -->
+    <div class="guide-box">
+      <h3>📖 Tata Cara Bermain:</h3>
+      <div>1. Pilih salah satu dari 5 game edukasi di bawah.</div>
+      <div>2. Baca / dengarkan pertanyaan di atas layar (Waktu: <b>20 Detik</b>).</div>
+      <div>3. Beradu cepat memilih jawaban yang benar sebelum waktu habis!</div>
+      <div>4. <b>Hati-hati:</b> Jika salah pencet, kamu akan <b>Membeku (Freeze) 1.5 detik</b> dan lawan bisa mencuri poin!</div>
+      
+      <div class="guide-section">
+        <span class="guide-tag hp">📱 Cara Main di HP / Tablet</span><br>
+        • Layar dibagi 2 (<b>Atas: Pemain 1 Biru</b> | <b>Bawah: Pemain 2 Merah</b>).<br>
+        • Langsung <b>sentuh / tap</b> kartu jawaban dengan jari masing-masing!
+      </div>
+
+      <div class="guide-section">
+        <span class="guide-tag pc">💻 Cara Main di Laptop / Komputer</span><br>
+        • Layar dibagi 2 (<b>Kiri: Pemain 1</b> | <b>Kanan: Pemain 2</b>).<br>
+        • Pemain 1 (Biru): Tekan tombol Keyboard <b>A</b>, <b>S</b>, atau <b>D</b>.<br>
+        • Pemain 2 (Merah): Tekan tombol Keyboard <b>J</b>, <b>K</b>, atau <b>L</b>.
+      </div>
+    </div>
 
     <div class="btn-game-grid">
       <button class="btn-game btn-g1" onclick="startGame(0)"><span>🌈</span> Game 1: Warna & Bentuk</button>
@@ -455,8 +540,8 @@
   <div id="game-container">
     <div class="game-header">
       <button class="btn-back" onclick="exitToMenu()">⬅ Menu</button>
-      <div id="game-title" style="font-weight: bold; font-size: 1.1rem; color: #555;">Game Edukasi</div>
-      <div id="question-counter" style="font-weight: bold; color: #FF6B6B; font-size: 1.1rem;">1/10</div>
+      <div id="game-title" style="font-weight: bold; font-size: 1rem; color: #555;">Game Edukasi</div>
+      <div id="question-counter" style="font-weight: bold; color: #FF6B6B; font-size: 1rem;">1/10</div>
     </div>
 
     <!-- TIMER BAR (20 DETIK) -->
@@ -476,16 +561,20 @@
       <!-- PEMAIN 1 -->
       <div class="player-zone player-p1" id="zone-p1">
         <div id="freeze-p1" class="freeze-overlay" style="display: none;">❄️ MEMBEKU!</div>
-        <div class="player-tag tag-p1">Pemain 1 (Biru)</div>
-        <div class="score-display">⭐ <span id="score-p1">0</span> <span id="streak-p1" class="streak-badge" style="display: none;">🔥 2x</span></div>
+        <div class="player-header-bar">
+          <div class="player-tag tag-p1">Pemain 1 (Biru)</div>
+          <div class="score-display">⭐ <span id="score-p1">0</span> <span id="streak-p1" class="streak-badge" style="display: none;">🔥 2x</span></div>
+        </div>
         <div class="options-grid" id="options-p1"></div>
       </div>
 
       <!-- PEMAIN 2 -->
       <div class="player-zone player-p2" id="zone-p2">
         <div id="freeze-p2" class="freeze-overlay" style="display: none;">❄️ MEMBEKU!</div>
-        <div class="player-tag tag-p2">Pemain 2 (Merah)</div>
-        <div class="score-display">⭐ <span id="score-p2">0</span> <span id="streak-p2" class="streak-badge" style="display: none;">🔥 2x</span></div>
+        <div class="player-header-bar">
+          <div class="player-tag tag-p2">Pemain 2 (Merah)</div>
+          <div class="score-display">⭐ <span id="score-p2">0</span> <span id="streak-p2" class="streak-badge" style="display: none;">🔥 2x</span></div>
+        </div>
         <div class="options-grid" id="options-p2"></div>
       </div>
     </div>
@@ -494,11 +583,11 @@
     <div id="result-modal">
       <h2>🎉 Permainan Selesai! 🎉</h2>
       <div class="winner-announcement" id="winner-text">Pemain 1 Menang! 🏆</div>
-      <div final class="final-scores">
+      <div class="final-scores">
         <div>P1 (Biru): ⭐ <b id="final-p1">0</b></div>
         <div>P2 (Merah): ⭐ <b id="final-p2">0</b></div>
       </div>
-      <button class="btn-restart" onclick="restartCurrentGame()">Main Lagi 🔀 (Soal Diacak)</button>
+      <button class="btn-restart" onclick="restartCurrentGame()">Main Lagi 🔄</button>
     </div>
   </div>
 
@@ -559,7 +648,7 @@
       return copy;
     }
 
-    // 5 GAME DATABASE (10 SOAL MASING-MASING)
+    // 5 GAME DATABASE
     const RAW_GAMES = [
       {
         title: "🌈 Warna & Bentuk",
@@ -660,7 +749,6 @@
       initAudio();
       currentGameIdx = idx;
       
-      // Acak soal
       activeQuestions = shuffleArray(RAW_GAMES[currentGameIdx].questions);
       
       currentQIdx = 0;
@@ -805,7 +893,7 @@
             <div class="opt-emoji">${opt.emoji}</div>
             <div class="opt-label">${opt.label}</div>
           </div>
-          <div class="btn-hint">${keyHints[idx]}</div>
+          <div class="key-hint">${keyHints[idx]}</div>
         `;
         container.appendChild(card);
       });
@@ -901,7 +989,7 @@
       startGame(currentGameIdx);
     }
 
-    // Keyboard support
+    // Keyboard support (Khusus laptop/PC)
     window.addEventListener('keydown', (e) => {
       if (document.getElementById('game-container').style.display !== 'flex') return;
       const key = e.key.toLowerCase();
